@@ -260,6 +260,7 @@ const taskXCoordinateRTL = (
   dates: Date[],
   columnWidth: number
 ) => {
+  if (!xDate) return 0;
   let x = taskXCoordinate(xDate, dates, columnWidth);
   x += columnWidth;
   return x;
