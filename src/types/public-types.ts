@@ -78,6 +78,7 @@ export interface DisplayOption {
   viewMode?: ViewMode;
   viewDate?: Date;
   preStepsCount?: number;
+  postStepsCount?: number;
   /**
    * Specifies the month name language. Able formats: ISO 639-2, Java Locale
    */
