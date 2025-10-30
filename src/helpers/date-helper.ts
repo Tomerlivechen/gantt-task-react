@@ -87,32 +87,28 @@ export const ganttDateRange = (
   }
   switch (viewMode) {
     case ViewMode.Year:
-      newStartDate = addToDate(newStartDate, -1, "year");
-      newStartDate = startOfDate(newStartDate, "year");
-      newEndDate = addToDate(newEndDate, 1, "year");
-      newEndDate = startOfDate(newEndDate, "year");
+      newStartDate = addToDate(newStartDate, -1*preStepsCount, "month");
+      newStartDate = startOfDate(newStartDate, "month");
+      newEndDate = addToDate(newEndDate, postStepsCount, "month");
+      newEndDate = startOfDate(newEndDate, "month");
       break;
     case ViewMode.QuarterYear:
-      newStartDate = addToDate(newStartDate, -3, "month");
+      newStartDate = addToDate(newStartDate, -1*preStepsCount, "month");
       newStartDate = startOfDate(newStartDate, "month");
-      newEndDate = addToDate(newEndDate, 3, "year");
-      newEndDate = startOfDate(newEndDate, "year");
+      newEndDate = addToDate(newEndDate, postStepsCount, "month");
+      newEndDate = startOfDate(newEndDate, "month");
       break;
     case ViewMode.Month:
       newStartDate = addToDate(newStartDate, -1 * preStepsCount, "month");
       newStartDate = startOfDate(newStartDate, "month");
-      newEndDate = addToDate(newEndDate, postStepsCount, "year");
-      newEndDate = startOfDate(newEndDate, "year");
+      newEndDate = addToDate(newEndDate, postStepsCount, "month");
+      newEndDate = startOfDate(newEndDate, "month");
       break;
     case ViewMode.Week:
       newStartDate = startOfDate(newStartDate, "day");
-      newStartDate = addToDate(
-        getMonday(newStartDate),
-        -7 * preStepsCount,
-        "day"
-      );
+      newStartDate = addToDate( newStartDate, -1 * preStepsCount,  "day");
       newEndDate = startOfDate(newEndDate, "day");
-      newEndDate = addToDate(newEndDate, postStepsCount, "month");
+      newEndDate = addToDate(newEndDate, postStepsCount, "day");
       break;
     case ViewMode.Day:
       newStartDate = startOfDate(newStartDate, "day");
