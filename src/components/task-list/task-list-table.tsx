@@ -105,7 +105,7 @@ export const TaskListTableDefault: React.FC<{
                 maxWidth: rowWidth,
               }}
             >
-              &nbsp;{toLocaleDateString(t.end, dateTimeOptions)}
+              &nbsp;{toLocaleDateString(new Date(t.end.getTime() - 24 * 60 * 60 * 1000), dateTimeOptions)}
             </div>
           </div>
         );

@@ -45,6 +45,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
     if (tooltipRef.current) {
       const tooltipHeight = tooltipRef.current.offsetHeight * 1.1;
       const tooltipWidth = tooltipRef.current.offsetWidth * 1.1;
+     
 
       let newRelatedY = task.index * rowHeight - scrollY + headerHeight;
       let newRelatedX: number;
@@ -121,19 +122,25 @@ export const StandardTooltipContent: React.FC<{
     fontSize,
     fontFamily,
   };
+  const DayInMS = 86400000;
   return (
     <div className={styles.tooltipDefaultContainer} style={style}>
       <b style={{ fontSize: fontSize + 6 }}>{`${
         task.name
       }: ${task.start.getDate()}-${
         task.start.getMonth() + 1
-      }-${task.start.getFullYear()} - ${task.end.getDate()}-${
-        task.end.getMonth() + 1
-      }-${task.end.getFullYear()}`}</b>
+      }-${task.start.getFullYear()} - ${
+        new Date(task.end.getTime() - DayInMS).getDate()
+      }-${
+        new Date(task.end.getTime() - DayInMS).getMonth() + 1
+      }-${
+        new Date(task.end.getTime() - DayInMS).getFullYear()
+      }`}</b>
+
       {task.end.getTime() - task.start.getTime() !== 0 && (
         <p className={styles.tooltipDefaultContainerParagraph}>{`Duration: ${~~(
-          (task.end.getTime() - task.start.getTime()) /
-          (1000 * 60 * 60 * 24)
+          (task.end.getTime() - DayInMS - task.start.getTime()) /
+          DayInMS
         )} day(s)`}</p>
       )}
 
