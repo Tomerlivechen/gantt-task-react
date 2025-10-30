@@ -14,6 +14,8 @@ export interface Task {
   id: string;
   type: TaskType;
   name: string;
+  propsHeader?: string[];
+  props?: string[];
   start: Date;
   end: Date;
   /**
