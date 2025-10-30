@@ -21,41 +21,46 @@ export const TaskListHeaderDefault: React.FC<{
           height: headerHeight - 2,
         }}
       >
+        {/* Name */}
         <div
           className={styles.ganttTable_HeaderItem}
-          style={{
-            minWidth: rowWidth,
-          }}
+          style={{ minWidth: rowWidth }}
         >
           &nbsp;Name
         </div>
         <div
           className={styles.ganttTable_HeaderSeparator}
-          style={{
-            height: headerHeight * 0.5,
-            marginTop: headerHeight * 0.2,
-          }}
+          style={{ height: headerHeight * 0.5, marginTop: headerHeight * 0.2 }}
         />
+
+        {/* Prop (NEW) */}
         <div
           className={styles.ganttTable_HeaderItem}
-          style={{
-            minWidth: rowWidth,
-          }}
+          style={{ minWidth: rowWidth }}
+        >
+          &nbsp;Prop
+        </div>
+        <div
+          className={styles.ganttTable_HeaderSeparator}
+          style={{ height: headerHeight * 0.5, marginTop: headerHeight * 0.25 }}
+        />
+
+        {/* From */}
+        <div
+          className={styles.ganttTable_HeaderItem}
+          style={{ minWidth: rowWidth }}
         >
           &nbsp;From
         </div>
         <div
           className={styles.ganttTable_HeaderSeparator}
-          style={{
-            height: headerHeight * 0.5,
-            marginTop: headerHeight * 0.25,
-          }}
+          style={{ height: headerHeight * 0.5, marginTop: headerHeight * 0.25 }}
         />
+
+        {/* To */}
         <div
           className={styles.ganttTable_HeaderItem}
-          style={{
-            minWidth: rowWidth,
-          }}
+          style={{ minWidth: rowWidth }}
         >
           &nbsp;To
         </div>
