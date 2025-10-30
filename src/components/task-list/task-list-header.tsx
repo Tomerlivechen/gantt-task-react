@@ -26,7 +26,7 @@ export const TaskListHeaderDefault: React.FC<{
           className={styles.ganttTable_HeaderItem}
           style={{ minWidth: rowWidth }}
         >
-          &nbsp;ChannelType
+          &nbsp;Channel Type
         </div>
         <div
           className={styles.ganttTable_HeaderSeparator}
@@ -38,7 +38,7 @@ export const TaskListHeaderDefault: React.FC<{
           className={styles.ganttTable_HeaderItem}
           style={{ minWidth: rowWidth }}
         >
-          &nbsp;CampaignType
+          &nbsp;Campaign Type
         </div>
         <div
           className={styles.ganttTable_HeaderSeparator}
