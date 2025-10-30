@@ -69,10 +69,10 @@ export const TaskListTableDefault: React.FC<{
           >
             <div
               className={styles.taskListCell}
-              style={{
-                minWidth: rowWidth,
-                maxWidth: rowWidth,
-              }}
+                style={{
+    width: "fit-content",
+    whiteSpace: "nowrap",
+  }}
               title={t.name}
             >
               <div className={styles.taskListNameWrapper}>
