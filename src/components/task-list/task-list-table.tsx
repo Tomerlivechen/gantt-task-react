@@ -72,8 +72,8 @@ export const TaskListTableDefault: React.FC<{
             <div
               className={styles.taskListCell}
               style={{
-                width: "fit-content",
-                whiteSpace: "nowrap",
+                minWidth: rowWidth,
+                maxWidth: rowWidth,
               }}
               title={t.name}
             >
@@ -96,8 +96,8 @@ export const TaskListTableDefault: React.FC<{
             <div
               className={styles.taskListCell}
               style={{
-                width: "fit-content",
-                whiteSpace: "nowrap",
+                minWidth: rowWidth,
+                maxWidth: rowWidth,
               }}
               title={t.props?.[0] || ""}
             >
