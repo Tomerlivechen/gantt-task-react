@@ -88,6 +88,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     () => (rowHeight * barFill) / 100,
     [rowHeight, barFill]
   );
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
   const [selectedTask, setSelectedTask] = useState<BarTask>();
   const [failedTask, setFailedTask] = useState<BarTask | null>(null);
@@ -100,6 +101,13 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   const [ignoreScrollEvent, setIgnoreScrollEvent] = useState(false);
 
   // task change events
+useEffect(() => {
+  const handle = (e: MouseEvent) => setMouse({ x: e.clientX, y: e.clientY });
+  window.addEventListener('mousemove', handle);
+  return () => window.removeEventListener('mousemove', handle);
+}, []);
+
+
   useEffect(() => {
     let filteredTasks: Task[];
     if (onExpanderClick) {
@@ -483,6 +491,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
             headerHeight={headerHeight}
             taskListWidth={taskListWidth}
             TooltipContent={TooltipContent}
+            mouse = {mouse}
             rtl={rtl}
             svgWidth={svgWidth}
           />
