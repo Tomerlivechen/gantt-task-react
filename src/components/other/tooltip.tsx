@@ -45,20 +45,20 @@ export const Tooltip: React.FC<TooltipProps> = ({
   const [relatedX, setRelatedX] = useState(0);
   useEffect(() => {
 if (tooltipRef.current && mouse) {
-  const tooltipHeight = tooltipRef.current.offsetHeight * 1.1;
-  const tooltipWidth = tooltipRef.current.offsetWidth * 1.1;
+  //const tooltipHeight = tooltipRef.current.offsetHeight * 1.1;
+  //const tooltipWidth = tooltipRef.current.offsetWidth * 1.1;
 
   // Adjust for scroll to make tooltip follow the visible mouse pointer
-  let newRelatedX = mouse.x + 12;
-  let newRelatedY = mouse.y + 12;
+  let newRelatedX = mouse.x ;
+  let newRelatedY = mouse.y ;
 
   // Keep inside SVG container bounds
-  if (newRelatedX + tooltipWidth > svgContainerWidth) {
-    newRelatedX = svgContainerWidth - tooltipWidth - 5;
-  }
-  if (newRelatedY + tooltipHeight > svgContainerHeight) {
-    newRelatedY = svgContainerHeight - tooltipHeight - 5;
-  }
+  //if (newRelatedX + tooltipWidth > svgContainerWidth) {
+  //  newRelatedX = svgContainerWidth - tooltipWidth - 5;
+  //}
+  //if (newRelatedY + tooltipHeight > svgContainerHeight) {
+  //  newRelatedY = svgContainerHeight - tooltipHeight - 5;
+  //}
 
     // We still reference all props to keep dependencies, even if unused
     const _ = `${task.index} + ${rowHeight} + ${scrollX} + ${scrollY} + ${headerHeight} + ${taskListWidth} + ${arrowIndent} + ${rtl} `
