@@ -221,7 +221,7 @@ export const Calendar: React.FC<CalendarProps> = ({
     const dates = dateSetup.dates;
     for (let i = 0; i < dates.length; i++) {
       const date = dates[i];
-      const bottomValue = `${getLocalDayOfWeek(date, locale, "narrow")}, ${date
+      const bottomValue = `${date
         .getDate()
         .toString()}`;
 
@@ -286,7 +286,11 @@ export const Calendar: React.FC<CalendarProps> = ({
         </text>
       );
       if (i === 0 || date.getDate() !== dates[i - 1].getDate()) {
-        const topValue = `${date.getDate()} ${getLocaleMonth(date, locale)}`;
+        const topValue = `${getLocalDayOfWeek(
+          date,
+          locale,
+          "narrow"
+        )}, ${date.getDate()} ${getLocaleMonth(date, locale)}`;
         topValues.push(
           <TopPartOfCalendar
             key={topValue + date.getFullYear()}
