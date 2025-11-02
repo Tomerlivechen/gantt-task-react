@@ -43,6 +43,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [relatedY, setRelatedY] = useState(0);
   const [relatedX, setRelatedX] = useState(0);
+  const tooltipRemove = true;
   useEffect(() => {
 if (tooltipRef.current && mouse) {
   //const tooltipHeight = tooltipRef.current.offsetHeight * 1.1;
@@ -81,8 +82,8 @@ if (tooltipRef.current && mouse) {
     svgContainerWidth,
     rtl,
   ]);
-
-  return (
+if (tooltipRemove) return null;
+  return ( 
     <div
       ref={tooltipRef}
       className={
