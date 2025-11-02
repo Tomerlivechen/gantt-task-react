@@ -5,15 +5,9 @@ import styles from "./tooltip.module.css";
 
 export type TooltipProps = {
   task: BarTask;
-  arrowIndent: number;
-  rtl: boolean;
   svgContainerHeight: number;
   svgContainerWidth: number;
-  svgWidth: number;
-  headerHeight: number;
   taskListWidth: number;
-  scrollX: number;
-  scrollY: number;
   fontSize: string;
   fontFamily: string;
   mouse: { x: number; y: number };
@@ -26,15 +20,10 @@ export type TooltipProps = {
 
 export const Tooltip: React.FC<TooltipProps> = ({
   task,
-  rtl,
   svgContainerHeight,
   svgContainerWidth,
-  scrollX,
-  scrollY,
-  arrowIndent,
   fontSize,
   fontFamily,
-  headerHeight,
   taskListWidth,
   TooltipContent,
   mouse,
