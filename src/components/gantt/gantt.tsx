@@ -12,7 +12,7 @@ import { CalendarProps } from "../calendar/calendar";
 import { TaskGanttContentProps } from "./task-gantt-content";
 import { TaskListHeaderDefault } from "../task-list/task-list-header";
 import { TaskListTableDefault } from "../task-list/task-list-table";
-import { StandardTooltipContent, Tooltip } from "../other/tooltip";
+import { StandardTooltipContent } from "../other/tooltip";
 import { VerticalScroll } from "../other/vertical-scroll";
 import { TaskListProps, TaskList } from "../task-list/task-list";
 import { TaskGantt } from "./task-gantt";
@@ -78,8 +78,6 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   );
 
   const [taskListWidth, setTaskListWidth] = useState(0);
-  const [svgContainerWidth, setSvgContainerWidth] = useState(0);
-  const [svgContainerHeight, setSvgContainerHeight] = useState(ganttHeight);
   const [barTasks, setBarTasks] = useState<BarTask[]>([]);
   const [ganttEvent, setGanttEvent] = useState<GanttEvent>({
     action: "",
@@ -88,7 +86,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     () => (rowHeight * barFill) / 100,
     [rowHeight, barFill]
   );
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+
 
   const [selectedTask, setSelectedTask] = useState<BarTask>();
   const [failedTask, setFailedTask] = useState<BarTask | null>(null);
@@ -101,11 +99,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   const [ignoreScrollEvent, setIgnoreScrollEvent] = useState(false);
 
   // task change events
-useEffect(() => {
-  const handle = (e: MouseEvent) => setMouse({ x: e.clientX, y: e.clientY });
-  window.addEventListener('mousemove', handle);
-  return () => window.removeEventListener('mousemove', handle);
-}, []);
+
 
 
   useEffect(() => {
@@ -251,19 +245,7 @@ useEffect(() => {
     }
   }, [taskListRef, listCellWidth]);
 
-  useEffect(() => {
-    if (wrapperRef.current) {
-      setSvgContainerWidth(wrapperRef.current.offsetWidth - taskListWidth);
-    }
-  }, [wrapperRef, taskListWidth]);
 
-  useEffect(() => {
-    if (ganttHeight) {
-      setSvgContainerHeight(ganttHeight + headerHeight);
-    } else {
-      setSvgContainerHeight(tasks.length * rowHeight + headerHeight);
-    }
-  }, [ganttHeight, tasks, headerHeight, rowHeight]);
 
   // scroll events
   useEffect(() => {
@@ -477,25 +459,7 @@ useEffect(() => {
           scrollY={scrollY}
           scrollX={scrollX}
         />
-        {ganttEvent.changedTask && (
-          <Tooltip
-            arrowIndent={arrowIndent}
-            rowHeight={rowHeight}
-            svgContainerHeight={svgContainerHeight}
-            svgContainerWidth={svgContainerWidth}
-            fontFamily={fontFamily}
-            fontSize={fontSize}
-            scrollX={scrollX}
-            scrollY={scrollY}
-            task={ganttEvent.changedTask}
-            headerHeight={headerHeight}
-            taskListWidth={taskListWidth}
-            TooltipContent={TooltipContent}
-            mouse = {mouse}
-            rtl={rtl}
-            svgWidth={svgWidth}
-          />
-        )}
+
         <VerticalScroll
           ganttFullHeight={ganttFullHeight}
           ganttHeight={ganttHeight}
