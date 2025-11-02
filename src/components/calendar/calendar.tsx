@@ -335,7 +335,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         const topValue = `${getLocalDayOfWeek(
           displayDate,
           locale,
-          "long"
+          "short"
         )}, ${displayDate.getDate()} ${getLocaleMonth(displayDate, locale)}`;
         const topPosition = (date.getHours() - 24) / 2;
         topValues.push(

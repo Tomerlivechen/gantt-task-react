@@ -27,7 +27,7 @@ export const TaskListHeaderDefault: React.FC<{
           className={styles.ganttTable_HeaderItem}
           style={{ minWidth: rowWidth }}
         >
-          &nbsp;Channel Type {locale}
+          &nbsp; {locale === "he" ? "ערוץ מדיה" : "Channel Type"}
         </div>
         <div
           className={styles.ganttTable_HeaderSeparator}
@@ -39,7 +39,8 @@ export const TaskListHeaderDefault: React.FC<{
           className={styles.ganttTable_HeaderItem}
           style={{ minWidth: rowWidth }}
         >
-          &nbsp;Campaign Type
+          &nbsp;{locale === "he" ? "סוג קמפיין" : "Campaign Type"}
+          
         </div>
         <div
           className={styles.ganttTable_HeaderSeparator}
@@ -51,7 +52,7 @@ export const TaskListHeaderDefault: React.FC<{
           className={styles.ganttTable_HeaderItem}
           style={{ minWidth: rowWidth }}
         >
-          &nbsp;From
+          &nbsp;{locale === "he" ? "תאריך עלייה" : "Start Date"}  
         </div>
         <div
           className={styles.ganttTable_HeaderSeparator}
@@ -63,7 +64,7 @@ export const TaskListHeaderDefault: React.FC<{
           className={styles.ganttTable_HeaderItem}
           style={{ minWidth: rowWidth }}
         >
-          &nbsp;To
+          &nbsp;{locale === "he" ? "תאריך ירידה" : "End Date"}  
         </div>
       </div>
     </div>
