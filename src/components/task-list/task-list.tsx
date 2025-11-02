@@ -22,6 +22,7 @@ export type TaskListProps = {
     rowWidth: string;
     fontFamily: string;
     fontSize: string;
+    locale: string;
   }>;
   TaskListTable: React.FC<{
     rowHeight: number;
@@ -66,6 +67,7 @@ export const TaskList: React.FC<TaskListProps> = ({
     fontFamily,
     fontSize,
     rowWidth,
+    locale,
   };
   const selectedTaskId = selectedTask ? selectedTask.id : "";
   const tableProps = {
