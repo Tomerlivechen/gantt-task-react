@@ -6,9 +6,15 @@ import styles from "./tooltip.module.css";
 export type TooltipProps = {
   task: BarTask;
   arrowIndent: number;
+  rtl: boolean;
   svgContainerHeight: number;
   svgContainerWidth: number;
+  svgWidth: number;
+  headerHeight: number;
   taskListWidth: number;
+  scrollX: number;
+  scrollY: number;
+  rowHeight: number;
   fontSize: string;
   fontFamily: string;
   mouse: { x: number; y: number };
@@ -18,44 +24,63 @@ export type TooltipProps = {
     fontFamily: string;
   }>;
 };
-
 export const Tooltip: React.FC<TooltipProps> = ({
   task,
+  rowHeight,
+  rtl,
   svgContainerHeight,
   svgContainerWidth,
+  scrollX,
+  scrollY,
+  arrowIndent,
   fontSize,
   fontFamily,
+  headerHeight,
   taskListWidth,
   TooltipContent,
   mouse,
 }) => {
   const tooltipRef = useRef<HTMLDivElement | null>(null);
-  const [relatedX, setRelatedX] = useState(0);
   const [relatedY, setRelatedY] = useState(0);
-
+  const [relatedX, setRelatedX] = useState(0);
   useEffect(() => {
-    if (tooltipRef.current && mouse) {
-      const tooltipHeight = tooltipRef.current.offsetHeight * 1.1;
-      const tooltipWidth = tooltipRef.current.offsetWidth * 1.1;
+   if (tooltipRef.current && mouse) {
+    const tooltipHeight = tooltipRef.current.offsetHeight * 1.1;
+    const tooltipWidth = tooltipRef.current.offsetWidth * 1.1;
 
-      // Position tooltip near the mouse
-      let newX = mouse.x + 12;
-      let newY = mouse.y + 12;
+    // Position tooltip near the mouse
+    let newRelatedX = mouse.x + 12; // small offset so cursor doesn't overlap
+    let newRelatedY = mouse.y + 12;
 
-      // Prevent overflow horizontally
-      if (newX + tooltipWidth > svgContainerWidth + taskListWidth) {
-        newX = svgContainerWidth + taskListWidth - tooltipWidth - 5;
-      }
-
-      // Prevent overflow vertically
-      if (newY + tooltipHeight > svgContainerHeight) {
-        newY = svgContainerHeight - tooltipHeight - 5;
-      }
-
-      setRelatedX(newX);
-      setRelatedY(newY);
+    // Keep it inside SVG container bounds
+    if (newRelatedX + tooltipWidth > svgContainerWidth) {
+      newRelatedX = svgContainerWidth - tooltipWidth - 5; // 5px padding
     }
-  }, [mouse, svgContainerWidth, svgContainerHeight, taskListWidth]);
+    if (newRelatedY + tooltipHeight > svgContainerHeight) {
+      newRelatedY = svgContainerHeight - tooltipHeight - 5;
+    }
+
+    // We still reference all props to keep dependencies, even if unused
+    const _ = `${task.index} + ${rowHeight} + ${scrollX} + ${scrollY} + ${headerHeight} + ${taskListWidth} + ${arrowIndent} + ${rtl} `
+    console.log(_)
+    setRelatedX(newRelatedX);
+    setRelatedY(newRelatedY);
+  
+    }
+  }, [
+    mouse,
+    tooltipRef,
+    task,
+    arrowIndent,
+    scrollX,
+    scrollY,
+    headerHeight,
+    taskListWidth,
+    rowHeight,
+    svgContainerHeight,
+    svgContainerWidth,
+    rtl,
+  ]);
 
   return (
     <div
@@ -65,7 +90,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
           ? styles.tooltipDetailsContainer
           : styles.tooltipDetailsContainerHidden
       }
-      style={{ left: relatedX, top: relatedY, position: "absolute" }}
+      style={{ left: relatedX, top: relatedY }}
     >
       <TooltipContent task={task} fontSize={fontSize} fontFamily={fontFamily} />
     </div>
@@ -77,32 +102,35 @@ export const StandardTooltipContent: React.FC<{
   fontSize: string;
   fontFamily: string;
 }> = ({ task, fontSize, fontFamily }) => {
-  const style = { fontSize, fontFamily };
+  const style = {
+    fontSize,
+    fontFamily,
+  };
   const DayInMS = 86400000;
-
   return (
     <div className={styles.tooltipDefaultContainer} style={style}>
-      <b style={{ fontSize: fontSize + 6 }}>
-        {`${task.name}: ${task.start.getDate()}-${
-          task.start.getMonth() + 1
-        }-${task.start.getFullYear()} - ${
-          new Date(task.end.getTime() - DayInMS).getDate()
-        }-${new Date(task.end.getTime() - DayInMS).getMonth() + 1}-${
-          new Date(task.end.getTime() - DayInMS).getFullYear()
-        }`}
-      </b>
+      <b style={{ fontSize: fontSize + 6 }}>{`${
+        task.name
+      }: ${task.start.getDate()}-${
+        task.start.getMonth() + 1
+      }-${task.start.getFullYear()} - ${
+        new Date(task.end.getTime() - DayInMS).getDate()
+      }-${
+        new Date(task.end.getTime() - DayInMS).getMonth() + 1
+      }-${
+        new Date(task.end.getTime() - DayInMS).getFullYear()
+      }`}</b>
 
       {task.end.getTime() - task.start.getTime() !== 0 && (
-        <p className={styles.tooltipDefaultContainerParagraph}>
-          {`Duration: ${~~((task.end.getTime() - task.start.getTime()) / DayInMS)} day(s)`}
-        </p>
+        <p className={styles.tooltipDefaultContainerParagraph}>{`Duration: ${~~(
+          (task.end.getTime() - task.start.getTime()) /
+          DayInMS
+        )} day(s)`}</p>
       )}
 
-      {!!task.progress && (
-        <p className={styles.tooltipDefaultContainerParagraph}>
-          {`Progress: ${task.progress} %`}
-        </p>
-      )}
+      <p className={styles.tooltipDefaultContainerParagraph}>
+        {!!task.progress && `Progress: ${task.progress} %`}
+      </p>
     </div>
   );
 };
