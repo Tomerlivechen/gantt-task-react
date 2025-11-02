@@ -480,7 +480,6 @@ useEffect(() => {
         {ganttEvent.changedTask && (
           <Tooltip
             arrowIndent={arrowIndent}
-            rowHeight={rowHeight}
             svgContainerHeight={svgContainerHeight}
             svgContainerWidth={svgContainerWidth}
             fontFamily={fontFamily}
