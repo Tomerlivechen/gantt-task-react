@@ -6,7 +6,8 @@ export const TaskListHeaderDefault: React.FC<{
   rowWidth: string;
   fontFamily: string;
   fontSize: string;
-}> = ({ headerHeight, fontFamily, fontSize, rowWidth }) => {
+  locale: string;
+}> = ({ headerHeight, fontFamily, fontSize, rowWidth,locale }) => {
   return (
     <div
       className={styles.ganttTable}
@@ -26,7 +27,7 @@ export const TaskListHeaderDefault: React.FC<{
           className={styles.ganttTable_HeaderItem}
           style={{ minWidth: rowWidth }}
         >
-          &nbsp;Channel Type
+          &nbsp;Channel Type {locale}
         </div>
         <div
           className={styles.ganttTable_HeaderSeparator}
