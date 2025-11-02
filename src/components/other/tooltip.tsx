@@ -49,8 +49,8 @@ if (tooltipRef.current && mouse) {
   const tooltipWidth = tooltipRef.current.offsetWidth * 1.1;
 
   // Adjust for scroll to make tooltip follow the visible mouse pointer
-  let newRelatedX = mouse.x - scrollX + 12;
-  let newRelatedY = mouse.y - scrollY + 12;
+  let newRelatedX = mouse.x + 12;
+  let newRelatedY = mouse.y + 12;
 
   // Keep inside SVG container bounds
   if (newRelatedX + tooltipWidth > svgContainerWidth) {
