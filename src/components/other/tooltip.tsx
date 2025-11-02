@@ -5,6 +5,7 @@ import styles from "./tooltip.module.css";
 
 export type TooltipProps = {
   task: BarTask;
+  arrowIndent: number;
   svgContainerHeight: number;
   svgContainerWidth: number;
   taskListWidth: number;
