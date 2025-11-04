@@ -60,10 +60,10 @@ const drownPathAndTriangle = (
   const taskToHorizontalOffsetValue =
     taskFromEndPosition > taskTo.x1
       ? arrowIndent
-      : taskTo.x1 - taskFrom.x2 - arrowIndent;
+      : taskTo.x1 - taskFrom.x1 - arrowIndent;
 
   const path = `M ${taskFrom.x1} ${taskFrom.y + taskHeight / 2}
-  h ${arrowIndent} 
+  h ${-arrowIndent} 
   v ${(indexCompare * rowHeight) / 2} 
   ${taskFromHorizontalOffsetValue}
   V ${taskToEndPosition} 
