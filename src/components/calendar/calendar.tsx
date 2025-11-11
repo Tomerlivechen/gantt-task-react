@@ -126,7 +126,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   const bottomValues: ReactChild[] = [];
   const topDefaultHeight = headerHeight * 0.5;
   const dates = dateSetup.dates;
-  const totalWidth = columnWidth * dates.length;
+ // const totalWidth = columnWidth * dates.length;
 
   for (let i = 0; i < dates.length; i++) {
     const date = dates[i];
@@ -160,15 +160,15 @@ export const Calendar: React.FC<CalendarProps> = ({
       let xText = columnWidth * centerIndex;
 
       // reflect for RTL so label stays visually centered relative to months
-      if (rtl) {
-        xText = totalWidth - columnWidth * centerIndex;
-      }
-      const lineX = rtl ? totalWidth - columnWidth * (i + 1) : columnWidth * i;
+     // if (rtl) {
+     //   xText = totalWidth - columnWidth * centerIndex;
+     // }
+
       topValues.push(
         <TopPartOfCalendar
           key={topValue + i}
           value={topValue}
-          x1Line={lineX}
+          x1Line={columnWidth * i}
           y1Line={0}
           y2Line={topDefaultHeight}
           xText={xText}
