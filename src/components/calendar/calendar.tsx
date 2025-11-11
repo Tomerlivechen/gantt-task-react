@@ -126,7 +126,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   const bottomValues: ReactChild[] = [];
   const topDefaultHeight = headerHeight * 0.5;
   const dates = dateSetup.dates;
- // const totalWidth = columnWidth * dates.length;
+  const totalWidth = columnWidth * dates.length;
 
   for (let i = 0; i < dates.length; i++) {
     const date = dates[i];
@@ -157,29 +157,18 @@ export const Calendar: React.FC<CalendarProps> = ({
       const centerIndex = (startIndex + endIndex + 1) / 2; // +1 to get center on column centers
 
       // default LTR position
-      //let xText = columnWidth * centerIndex;
+      let xText = columnWidth * centerIndex;
 
       // reflect for RTL so label stays visually centered relative to months
-      //if (rtl) {
-      //  xText = totalWidth - columnWidth * centerIndex;
-      //}
-
-      let xText: number;
-
-if (rtl) {
-  const mirroredStart = dates.length - 1 - startIndex;
-  const mirroredEnd = dates.length - 1 - endIndex;
-  const mirroredCenter = (mirroredStart + mirroredEnd + 1) / 2;
-  xText = columnWidth * mirroredCenter;
-} else {
-  xText = columnWidth * centerIndex;
-}
-
+      if (rtl) {
+        xText = totalWidth - columnWidth * centerIndex;
+      }
+      const lineX = rtl ? totalWidth - columnWidth * (i + 1) : columnWidth * i;
       topValues.push(
         <TopPartOfCalendar
           key={topValue + i}
           value={topValue}
-          x1Line={columnWidth * i}
+          x1Line={lineX}
           y1Line={0}
           y2Line={topDefaultHeight}
           xText={xText}
