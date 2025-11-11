@@ -122,7 +122,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   };
 
   const getCalendarValuesForMonth = () => {
-   const topValues: ReactChild[] = [];
+  const topValues: ReactChild[] = [];
   const bottomValues: ReactChild[] = [];
   const topDefaultHeight = headerHeight * 0.5;
   const dates = dateSetup.dates;
@@ -132,55 +132,46 @@ export const Calendar: React.FC<CalendarProps> = ({
     const date = dates[i];
     const bottomValue = getLocaleMonth(date, locale);
 
-    // bottom labels
-    const bottomX = rtl
-      ? totalWidth - (columnWidth * i + columnWidth * 0.5)
-      : columnWidth * i + columnWidth * 0.5;
-
+    // bottom labels (month names) - same rendering approach you use elsewhere
     bottomValues.push(
       <text
         key={bottomValue + date.getFullYear() + i}
         y={headerHeight * 0.8}
-        x={bottomX}
+        x={columnWidth * i + columnWidth * 0.5}
         className={styles.calendarBottomText}
       >
         {bottomValue}
       </text>
     );
 
-    // Top year label - only on first month of the year
+    // Render year label only on first month of that year (or first date overall)
     if (i === 0 || date.getFullYear() !== dates[i - 1].getFullYear()) {
       const topValue = date.getFullYear().toString();
 
-      // find last month index for this year
-      let lastIndex = i;
-      while (
-        lastIndex + 1 < dates.length &&
-        dates[lastIndex + 1].getFullYear() === date.getFullYear()
-      ) {
-        lastIndex++;
+      // count how many 'date' entries belong to this year
+      const monthsInYear = dates.filter((d) => d.getFullYear() === date.getFullYear()).length;
+
+      // compute first and last index for this year and center between them
+      const startIndex = i;
+      const endIndex = i + monthsInYear - 1;
+      const centerIndex = (startIndex + endIndex + 1) / 2; // +1 to get center on column centers
+
+      // default LTR position
+      let xText = columnWidth * centerIndex;
+
+      // reflect for RTL so label stays visually centered relative to months
+      if (rtl) {
+        xText = totalWidth - columnWidth * centerIndex;
       }
-
-      // first and last x positions for this year
-      const firstX = columnWidth * i;
-      const lastX = columnWidth * (lastIndex + 1);
-
-      // center for top label
-      const centerX = rtl
-        ? totalWidth - (firstX + lastX) / 2
-        : (firstX + lastX) / 2;
-
-      // lineX mirrors too
-      const lineX = rtl ? totalWidth - firstX : firstX;
 
       topValues.push(
         <TopPartOfCalendar
           key={topValue + i}
           value={topValue}
-          x1Line={lineX}
+          x1Line={columnWidth * i}
           y1Line={0}
           y2Line={topDefaultHeight}
-          xText={centerX}
+          xText={xText}
           yText={topDefaultHeight * 0.9}
         />
       );
@@ -418,4 +409,3 @@ export const Calendar: React.FC<CalendarProps> = ({
     </g>
   );
 };
-
