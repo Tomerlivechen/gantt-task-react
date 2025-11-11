@@ -122,48 +122,64 @@ export const Calendar: React.FC<CalendarProps> = ({
   };
 
   const getCalendarValuesForMonth = () => {
-    const topValues: ReactChild[] = [];
-    const bottomValues: ReactChild[] = [];
-    const topDefaultHeight = headerHeight * 0.5;
-    for (let i = 0; i < dateSetup.dates.length; i++) {
-      const date = dateSetup.dates[i];
-      const bottomValue = getLocaleMonth(date, locale);
-      bottomValues.push(
-        <text
-          key={bottomValue + date.getFullYear()}
-          y={headerHeight * 0.8}
-          x={columnWidth * i + columnWidth * 0.5}
-          className={styles.calendarBottomText}
-        >
-          {bottomValue}
-        </text>
-      );
-      if (
-        i === 0 ||
-        date.getFullYear() !== dateSetup.dates[i - 1].getFullYear()
-      ) {
-        const topValue = date.getFullYear().toString();
-        let xText: number;
-        if (rtl) {
-          xText = (6 + i + date.getMonth() + 1) * columnWidth;
-        } else {
-          xText = (6 + i - date.getMonth()) * columnWidth;
-        }
-        topValues.push(
-          <TopPartOfCalendar
-            key={topValue}
-            value={topValue}
-            x1Line={columnWidth * i}
-            y1Line={0}
-            y2Line={topDefaultHeight}
-            xText={xText}
-            yText={topDefaultHeight * 0.9}
-          />
-        );
+  const topValues: ReactChild[] = [];
+  const bottomValues: ReactChild[] = [];
+  const topDefaultHeight = headerHeight * 0.5;
+  const dates = dateSetup.dates;
+  const totalWidth = columnWidth * dates.length;
+
+  for (let i = 0; i < dates.length; i++) {
+    const date = dates[i];
+    const bottomValue = getLocaleMonth(date, locale);
+
+    // bottom labels (month names) - same rendering approach you use elsewhere
+    bottomValues.push(
+      <text
+        key={bottomValue + date.getFullYear() + i}
+        y={headerHeight * 0.8}
+        x={columnWidth * i + columnWidth * 0.5}
+        className={styles.calendarBottomText}
+      >
+        {bottomValue}
+      </text>
+    );
+
+    // Render year label only on first month of that year (or first date overall)
+    if (i === 0 || date.getFullYear() !== dates[i - 1].getFullYear()) {
+      const topValue = date.getFullYear().toString();
+
+      // count how many 'date' entries belong to this year
+      const monthsInYear = dates.filter((d) => d.getFullYear() === date.getFullYear()).length;
+
+      // compute first and last index for this year and center between them
+      const startIndex = i;
+      const endIndex = i + monthsInYear - 1;
+      const centerIndex = (startIndex + endIndex + 1) / 2; // +1 to get center on column centers
+
+      // default LTR position
+      let xText = columnWidth * centerIndex;
+
+      // reflect for RTL so label stays visually centered relative to months
+      if (rtl) {
+        xText = totalWidth - columnWidth * centerIndex;
       }
+
+      topValues.push(
+        <TopPartOfCalendar
+          key={topValue + i}
+          value={topValue}
+          x1Line={columnWidth * i}
+          y1Line={0}
+          y2Line={topDefaultHeight}
+          xText={xText}
+          yText={topDefaultHeight * 0.9}
+        />
+      );
     }
-    return [topValues, bottomValues];
-  };
+  }
+
+  return [topValues, bottomValues];
+};
 
   const getCalendarValuesForWeek = () => {
     const topValues: ReactChild[] = [];
